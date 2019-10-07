@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import SearchTerm from './SearchTerm';
+import NewsList from './NewsList';
+
 import uuid from 'uuid/v1';
+
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -16,6 +19,27 @@ function News() {
         'id': uuid(),
         'editing': true,
     }])
+
+    const [newsList, updateNewsList] = useState([
+        {
+            title: 'A placeholder new',
+            url: 'https://google.com',
+            date_i: '2019-10-07',
+            date_f: '2019-10-07',
+        },
+        {
+            title: 'A second placeholder new',
+            url: 'https://youtube.com',
+            date_i: '2019-10-07',
+            date_f: '2019-10-07',
+        },
+        {
+            title: 'A third placeholder new',
+            url: 'https://facebook.com',
+            date_i: '2019-10-07',
+            date_f: '2019-10-07',
+        },
+    ]);
 
     function submitSearch() {
         console.log(terms)
@@ -66,43 +90,50 @@ function News() {
             height: '0.8em',
         },
         filterPanel: {
-            margin: theme.spacing(2),
             maxWidth: '300px',
             padding: theme.spacing(1),
+            marginRight: theme.spacing(2),
+        },
+        flexWrapper: {
+            display: 'flex',
+            margin: theme.spacing(2),
         }
     }))();
 
-    return <Card className={classes.filterPanel}>
-        <CardContent>
-            <Typography color="textSecondary" gutterBottom>
-                Adicione nomes de FIIs de interesse
-            </Typography>
-            {terms.map(t =>
-            <SearchTerm
-                key={t.id}
-                id={t.id}
-                text={t.text}
-                editing={t.editing}
-                update={updateSearchTerm}
-                edit={editSearchTerm}
-                remove={removeSearchTerm}
-            />)}
+    return <div className={classes.flexWrapper}>
+        <Card className={classes.filterPanel}>
+            <CardContent>
+                <Typography color="textSecondary" gutterBottom>
+                    Adicione nomes de FIIs de interesse
+                </Typography>
+                {terms.map(t =>
+                <SearchTerm
+                    key={t.id}
+                    id={t.id}
+                    text={t.text}
+                    editing={t.editing}
+                    update={updateSearchTerm}
+                    edit={editSearchTerm}
+                    remove={removeSearchTerm}
+                />)}
 
-            <IconButton
-                onClick={addSearchTerm}>
-                <AddIcon className={classes.addIcon} />
-            </IconButton>
+                <IconButton
+                    onClick={addSearchTerm}>
+                    <AddIcon className={classes.addIcon} />
+                </IconButton>
 
-            <CardActions>
-                <Button
-                    variant='contained'
-                    color='primary'
-                    onClick={submitSearch}>
-                    Submit
-                </Button>
-            </CardActions>
-        </CardContent>
-    </Card>;
+                <CardActions>
+                    <Button
+                        variant='contained'
+                        color='primary'
+                        onClick={submitSearch}>
+                        Submit
+                    </Button>
+                </CardActions>
+            </CardContent>
+        </Card>
+        <NewsList news={newsList} />
+    </div>;
 }
 
 export default News;
