@@ -1,6 +1,9 @@
 from flask import Flask, request, jsonify, g
+from flask_cors import CORS
+from fii_news import FIINews
 
 app = Flask(__name__)
+CORS(app)
 
 def get_fii_news(data):
     if 'fii' not in g:
