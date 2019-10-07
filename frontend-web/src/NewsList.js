@@ -18,16 +18,22 @@ function NewsList(props) {
         newsList: {
             flex: 'auto',
             maxWidth: '50em',
+        },
+        title: {
+            fontSize: '1.3em',
         }
     })();
 
     return <Card className={classes.newsList}>
         <CardContent>
-            <Typography color="textSecondary">
+            <Typography className={classes.title}>
                 Notícias Encontradas
             </Typography>
+            { props.news.length === 0 ? <Typography color="textSecondary">
+                Nenhuma Notícia
+            </Typography> : null}
         </CardContent>
-        <List>{props.news.map((n, i) => {
+        {props.news.length ? <List>{props.news.map((n, i) => {
             return (<div key={i}>
                 <Divider />
                 <ListItem
@@ -36,7 +42,7 @@ function NewsList(props) {
                     <ListItemText primary={n.title} />
                 </ListItem>
             </div>)})}
-        </List>
+        </List> : null}
     </Card>;
 }
 
