@@ -22,6 +22,7 @@ function News() {
     }])
 
     const [newsList, updateNewsList] = useState({});
+    const [loading, updateLoading] = useState(false)
 
     function submitSearch() {
         console.log(terms)
@@ -39,6 +40,7 @@ function News() {
         ).then(
             r => {
                 updateNewsList(r);
+                updateLoading(false);
             }
         )
     }
@@ -130,7 +132,7 @@ function News() {
                 </CardActions>
             </CardContent>
         </Card>
-        <NewsList news={newsList} />
+        <NewsList news={newsList} loading={loading}/>
     </div>;
 }
 
