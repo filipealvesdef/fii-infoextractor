@@ -95,6 +95,7 @@ function News() {
         },
         flexWrapper: {
             display: 'flex',
+            alignItems: 'start',
             margin: theme.spacing(2),
         }
     }))();
