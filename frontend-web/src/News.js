@@ -127,7 +127,7 @@ function News() {
                         variant='contained'
                         color='primary'
                         onClick={submitSearch}>
-                        Submit
+                        Buscar
                     </Button>
                 </CardActions>
             </CardContent>
