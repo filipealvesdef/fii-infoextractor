@@ -7,6 +7,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 
 function NewsList(props) {
@@ -27,6 +28,12 @@ function NewsList(props) {
         newsSection: {
             marginTop: theme.spacing(2),
         },
+        loadingContent: {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '10em',
+        },
     }))();
 
     const newsKeys = Object.keys(props.news)
@@ -37,11 +44,18 @@ function NewsList(props) {
             <Typography className={classes.title}>
                 Notícias Encontradas
             </Typography>
-            { props.news.length === 0 ? <Typography color="textSecondary">
+            {newsLength === 0 && !props.loading ?
+            <Typography color="textSecondary">
                 Nenhuma Notícia
             </Typography> : null}
         </CardContent>
         </Card>
+
+        {props.loading ? <Card className={classes.newsSection}>
+            <CardContent className={classes.loadingContent}>
+                <CircularProgress />
+            </CardContent>
+        </Card> : null}
 
         {newsKeys.map(k => {
             return (<Card className={classes.newsSection}><List>
@@ -67,6 +81,7 @@ function NewsList(props) {
 
 NewsList.defaultProps = {
     news: {},
+    loading: false,
 }
 
 export default NewsList;
