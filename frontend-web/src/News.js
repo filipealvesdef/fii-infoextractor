@@ -18,7 +18,10 @@ function News() {
     }
 
     function removeSearchTerm(id) {
-        updateTerms(terms.filter(t => t.id !== id))
+        updateTerms(terms.filter(t => {
+            t.editing = false;
+            return t.id !== id;
+        }))
     }
 
     function editSearchTerm(id) {
@@ -39,6 +42,7 @@ function News() {
             }
             return t;
         }))
+        addSearchTerm();
     }
 
     function addSearchTerm() {
