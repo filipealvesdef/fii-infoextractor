@@ -8,5 +8,6 @@ setup(
         'flask~=1.1.1',
         'bs4~=0.0.1',
         'requests~=2.22.0',
+        'flask-cors~=3.0.8',
     ],
 )
