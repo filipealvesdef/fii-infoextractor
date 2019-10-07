@@ -7,5 +7,6 @@ setup(
     install_requires=[
         'flask~=1.1.1',
         'bs4~=0.0.1',
+        'requests~=2.22.0',
     ],
 )
