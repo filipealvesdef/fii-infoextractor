@@ -25,7 +25,6 @@ function News() {
     const [loading, updateLoading] = useState(false)
 
     function submitSearch() {
-        console.log(terms)
         updateNewsList({});
         const termsList = terms.map(t => t.text);
         updateLoading(true)
