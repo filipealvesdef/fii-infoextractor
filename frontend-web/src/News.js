@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import SearchTerm from './SearchTerm';
 import NewsList from './NewsList';
+import { ENDPOINT } from './config';
 
 import uuid from 'uuid/v1';
 
@@ -20,29 +21,26 @@ function News() {
         'editing': true,
     }])
 
-    const [newsList, updateNewsList] = useState([
-        {
-            title: 'A placeholder new',
-            url: 'https://google.com',
-            date_i: '2019-10-07',
-            date_f: '2019-10-07',
-        },
-        {
-            title: 'A second placeholder new',
-            url: 'https://youtube.com',
-            date_i: '2019-10-07',
-            date_f: '2019-10-07',
-        },
-        {
-            title: 'A third placeholder new',
-            url: 'https://facebook.com',
-            date_i: '2019-10-07',
-            date_f: '2019-10-07',
-        },
-    ]);
+    const [newsList, updateNewsList] = useState({});
 
     function submitSearch() {
         console.log(terms)
+        updateNewsList({});
+        const termsList = terms.map(t => t.text);
+        updateLoading(true)
+        fetch(ENDPOINT.news, {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(termsList)
+        }).then(
+            r => r.json()
+        ).then(
+            r => {
+                updateNewsList(r);
+            }
+        )
     }
 
     function removeSearchTerm(id) {
