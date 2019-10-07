@@ -11,20 +11,28 @@ import { makeStyles } from '@material-ui/core/styles';
 
 function NewsList(props) {
     function handleClick(url) {
-        console.log(url)
+        window.open(url)
     }
 
-    const classes = makeStyles({
+    const classes = makeStyles(theme => ({
         newsList: {
             flex: 'auto',
-            maxWidth: '50em',
         },
         title: {
             fontSize: '1.3em',
-        }
-    })();
+        },
+        newsTitle: {
+            margin: theme.spacing(2),
+        },
+        newsSection: {
+            marginTop: theme.spacing(2),
+        },
+    }))();
 
-    return <Card className={classes.newsList}>
+    const newsKeys = Object.keys(props.news)
+    const newsLength = newsKeys.length
+
+    return <div className={classes.newsList}><Card>
         <CardContent>
             <Typography className={classes.title}>
                 Notícias Encontradas
@@ -33,17 +41,32 @@ function NewsList(props) {
                 Nenhuma Notícia
             </Typography> : null}
         </CardContent>
-        {props.news.length ? <List>{props.news.map((n, i) => {
-            return (<div key={i}>
-                <Divider />
-                <ListItem
-                    button
-                    onClick={() => {handleClick(n.url)}}>
-                    <ListItemText primary={n.title} />
-                </ListItem>
-            </div>)})}
-        </List> : null}
-    </Card>;
+        </Card>
+
+        {newsKeys.map(k => {
+            return (<Card className={classes.newsSection}><List>
+            <Typography
+                className={classes.newsTitle}
+                color='textSecondary'>
+                {k}
+            </Typography>
+            {props.news[k].map((n, i) => {
+                return (<div key={i}>
+                    <Divider />
+                    <ListItem
+                        button
+                        onClick={() => {handleClick(n.link)}}>
+                        <ListItemText primary={n.date_i + ' - ' + n.title + ' - ' + n.date_f} />
+                    </ListItem>
+                </div>)
+            })}
+            </List></Card>)
+        })}
+    </div>
+}
+
+NewsList.defaultProps = {
+    news: {},
 }
 
 export default NewsList;
