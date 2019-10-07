@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import SearchTerm from './SearchTerm';
 import uuid from 'uuid/v1';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
@@ -57,42 +60,45 @@ function News() {
     }
 
     const classes = makeStyles(theme => ({
-        button: {
-            margin: theme.spacing(1),
-        },
         addIcon: {
             width: '0.8em',
             height: '0.8em',
         },
+        filterPanel: {
+            margin: theme.spacing(2),
+            maxWidth: '300px',
+            padding: theme.spacing(1),
+        }
     }))();
 
-    return <div>
-        {terms.map(t =>
-        <SearchTerm
-            key={t.id}
-            id={t.id}
-            text={t.text}
-            editing={t.editing}
-            update={updateSearchTerm}
-            edit={editSearchTerm}
-            remove={removeSearchTerm}
-        />)}
+    return <Card className={classes.filterPanel}>
+        <CardContent>
+            {terms.map(t =>
+            <SearchTerm
+                key={t.id}
+                id={t.id}
+                text={t.text}
+                editing={t.editing}
+                update={updateSearchTerm}
+                edit={editSearchTerm}
+                remove={removeSearchTerm}
+            />)}
 
-        <IconButton
-            onClick={addSearchTerm}>
-            <AddIcon className={classes.addIcon} />
-        </IconButton>
+            <IconButton
+                onClick={addSearchTerm}>
+                <AddIcon className={classes.addIcon} />
+            </IconButton>
 
-        <div>
-            <Button
-                className={classes.button}
-                variant='contained'
-                color='primary'
-                onClick={submitSearch}>
-                Submit
-            </Button>
-        </div>
-    </div>
+            <CardActions>
+                <Button
+                    variant='contained'
+                    color='primary'
+                    onClick={submitSearch}>
+                    Submit
+                </Button>
+            </CardActions>
+        </CardContent>
+    </Card>;
 }
 
 export default News;
