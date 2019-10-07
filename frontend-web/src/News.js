@@ -8,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 
 function News() {
     const [terms, updateTerms] = useState([{
@@ -73,6 +74,9 @@ function News() {
 
     return <Card className={classes.filterPanel}>
         <CardContent>
+            <Typography color="textSecondary" gutterBottom>
+                Adicione nomes de FIIs de interesse
+            </Typography>
             {terms.map(t =>
             <SearchTerm
                 key={t.id}
