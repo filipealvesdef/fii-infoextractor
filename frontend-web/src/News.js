@@ -15,12 +15,14 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
 function News() {
-    const [terms, updateTerms] = useState([{
+    const storedTerms = localStorage.getItem('terms');
+    const initialTerms = storedTerms ? JSON.parse(storedTerms) : [{
         'text': '',
         'id': uuid(),
         'editing': true,
-    }])
+    }];
 
+    const [terms, updateTerms] = useState(initialTerms)
     const [newsList, updateNewsList] = useState({});
     const [loading, updateLoading] = useState(false)
 
@@ -45,30 +47,36 @@ function News() {
     }
 
     function removeSearchTerm(id) {
-        updateTerms(terms.filter(t => {
+        const ts = terms.filter(t => {
             t.editing = false;
             return t.id !== id;
-        }))
+        })
+        localStorage.setItem('terms', JSON.stringify(ts));
+        updateTerms(ts);
     }
 
     function editSearchTerm(id) {
-        updateTerms(terms.map(t => {
+        const ts = terms.map(t => {
             t.editing = false;
             if (t.id === id) {
                 t.editing = true;
             }
             return t;
-        }))
+        })
+        localStorage.setItem('terms', JSON.stringify(ts));
+        updateTerms(ts);
     }
 
     function updateSearchTerm(term) {
-        updateTerms(terms.map(t => {
+        const ts = terms.map(t => {
             t.editing = false
             if (t.id === term.id) {
                 t.text = term.text;
             }
             return t;
-        }))
+        })
+        localStorage.setItem('terms', JSON.stringify(ts));
+        updateTerms(ts);
         addSearchTerm();
     }
 
