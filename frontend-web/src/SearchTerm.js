@@ -37,6 +37,8 @@ function SearchTerm(props) {
     function handleKeyDown(e) {
         if (e.key === 'Enter') {
             handleUpdate()
+        } else if(e.key === 'Backspace' && currText === '') {
+            deleteSearchTerm()
         }
     }
 
