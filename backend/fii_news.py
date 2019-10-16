@@ -30,11 +30,18 @@ def get_news(pag, query):
 
     res = requests.get(url, params=params)
     txt = res.text
+    html = BeautifulSoup(txt, 'html.parser')
+    not_found_new = html.select('.box-aviso div p')
+    if len(not_found_new):
+        return {
+            'pages': 0,
+            'news': [],
+        }
+
     itemsCount = int(get_pages(txt, 'itemsCount'))
     pageSize = int(get_pages(txt, 'pageSize'))
     pages = int(itemsCount / pageSize)
 
-    html = BeautifulSoup(res.text, 'html.parser')
     news_lis = html.select('#linksNoticias li')
     news = []
 
